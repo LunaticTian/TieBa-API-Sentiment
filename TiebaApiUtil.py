@@ -274,10 +274,3 @@ def GetFloorInFloor(url):
 
 
 
-
-
-if __name__=='__main__':
-    # c = GetTiebaOne(ID=5792456969)
-    # print(c)
-    c  = GetPage(key='国际米兰',Start=1,End=5)
-    print(c)
