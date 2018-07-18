@@ -189,43 +189,59 @@ def GetTiebaOne(ID):
             'Error' : 'Error'
         }
         return json.dumps(ReturnJ)
+    # 页数增加
+    for page in range(0,16122330,30):
+        # 这里要对页数循环
+        url1 = 'http://tieba.baidu.com/mo/q---9CC3CD881B0FE2BA30F4559A6AF8A941%3AFG%3D1-sz%40320_240%2C-1-3-0--2--wapp_1531379582221_177/m?kz='
+        url2 = '&new_word=&pinf=1_2_0&pn=' + str(page)
+        url3 = '&lp=6021'
+        url = url1 + str(ID) + url2 + url3
+        # print(url)
 
-    for OneContent,count in zip(findall,range(1,999)):
+        GetContent = requests.get(url=url)
 
+        Soup = BeautifulSoup(GetContent.text, 'lxml')
+        findall = Soup.select('div.i')
 
-        if count == 1 and page == 0:
-
-            pattern = re.compile('class="i">1楼.\s(.*?)<table>.*?<span class="g"><a href=".*?">(.*?)</a>.*?class="b">(.*?)</s', re.S)
-            items = re.findall(pattern, str(OneContent))
-            Text = items[0][0]
-            Author = items[0][1]
-            Time = items[0][2]
-            SonDict['Text'] = Text
-            SonDict['Author'] = Author
-            SonDict['Time'] = Time
-            SonDict['FloorInFloor'] = ''
-            FatherList.append(copy.deepcopy(SonDict))
-        else:
-            pattern = re.compile('class="i">\d*楼.\s(.*?)<table>.*?<span class="g"><a href=".*?">(.*?)</a>.*?class="b">(.*?)</span>.*?href="(.*?)">回复(.*?)</a>', re.S)
-            items = re.findall(pattern, str(OneContent))
-
-            Text = items[0][0]
-            Author = items[0][1]
-            Time = items[0][2]
+        for OneContent,count in zip(findall,range(1,999)):
 
 
-            Floor = items[0][4][1:-1]
-            # print(items)
-            if not (Floor == '' or Floor == None):
-                # print(items[0][2])
-                FloorInFloor = GetFloorInFloor(url=items[0][3])
-            SonDict['Text'] = Text
-            SonDict['Author'] = items[0][1]
-            SonDict['Time'] = Time
-            SonDict['FloorInFloor'] = FloorInFloor
-            FatherList.append(copy.deepcopy(SonDict))
-            FloorInFloor.clear()
-            SonDict.clear()
+            if count == 1 and page == 0:
+
+                pattern = re.compile('class="i">1楼.\s(.*?)<table>.*?<span class="g"><a href=".*?">(.*?)</a>.*?class="b">(.*?)</s', re.S)
+                items = re.findall(pattern, str(OneContent))
+                Text = items[0][0]
+                Author = items[0][1]
+                Time = items[0][2]
+                SonDict['Text'] = Text
+                SonDict['Author'] = Author
+                SonDict['Time'] = Time
+                SonDict['FloorInFloor'] = ''
+                FatherList.append(copy.deepcopy(SonDict))
+            else:
+                pattern = re.compile('class="i">\d*楼.\s(.*?)<table>.*?<span class="g"><a href=".*?">(.*?)</a>.*?class="b">(.*?)</span>.*?href="(.*?)">回复(.*?)</a>', re.S)
+                items = re.findall(pattern, str(OneContent))
+
+                Text = items[0][0]
+                Author = items[0][1]
+                Time = items[0][2]
+
+
+                Floor = items[0][4][1:-1]
+                # print(items)
+                FloorInFloor = []
+                if not (Floor == '' or Floor == None):
+                    # print(items[0][2])
+                    FloorInFloor = GetFloorInFloor(url=items[0][3])
+                SonDict['Text'] = Text
+                SonDict['Author'] = items[0][1]
+                SonDict['Time'] = Time
+                SonDict['FloorInFloor'] = FloorInFloor
+                FatherList.append(copy.deepcopy(SonDict))
+                FloorInFloor.clear()
+                SonDict.clear()
+
+            # 这里不能直接判断下一页
 
         if not '下一页' in GetContent.text:
             break
@@ -249,12 +265,14 @@ def GetFloorInFloor(url):
     ReturnList = []
 
     for pn in range(1,100):
+
         web = requests.get(url=url2+str(pn))
         Soup = BeautifulSoup(web.text,'lxml')
         findall = Soup.select('div.i')
         for i in findall:
+
             pattern = re.compile(
-                '<div class="i">(.*?)<a hre.*?>(.*?)</a>.*?<span class="b">(.*?)</span>',
+                '<div class="i">(.*?)<br/><a hre.*?>(.*?)</a>.*?<span class="b">(.*?)</span>',
                 re.S)
             items = re.findall(pattern, str(i))
             Son = {
@@ -269,6 +287,10 @@ def GetFloorInFloor(url):
             break
     return ReturnList
 
+
+if __name__  == '__main__':
+    S = GetTiebaOne(5462782391)
+    print(S)
 
 
 
