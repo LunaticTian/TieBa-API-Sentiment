@@ -69,7 +69,7 @@ def GetId():
     for name in keyList:
         test = TiebaApiUtil.GetPage(key=name,Start=Start,End=End)
         test1 = eval(test)
-        print(test1)
+        # print(test1)
         for i in test1['Page']:
             for x in i.values():
                 for j in x:
@@ -86,7 +86,7 @@ def GetText(list):
         test1 = eval(Text)
         # print('请开始你的表演')
         # print(TiebaApiUtil.GetTiebaOne(id))
-        print(test1)
+        # print(test1)
         for i in test1:
         # 检测回复是否有关键词
 
@@ -136,6 +136,8 @@ NewSave = {}
 
 '''
 def ComparisonDict():
+    print('This is OldSave: '+ str(OldSave))
+    print('This is Save: '+ str(Save))
     T = 1
     for x in Save:
         for i,y in zip(OldSave,range(1,len(OldSave)+1)):
@@ -154,6 +156,7 @@ def ComparisonDict():
             if y == len(OldSave) and  x != i:
                 # print('test2222')
                 NewList.append(str(x))
+
     OldSave.clear()
     OldSave.update(copy.deepcopy(Save))
     Save.clear()
@@ -177,11 +180,19 @@ def FileSave():
 
 def ini():
     # 初始化
-    print('初始化')
-    GetText(GetId())
-    OldSave.update(copy.deepcopy(Save))
-    Save.clear()
-    FileSave()
+    try:
+        F = open('list.tieba','r',encoding='utf-8')
+        F.close()
+    except:
+        print('初始化')
+        GetText(GetId())
+        OldSave.update(copy.deepcopy(Save))
+        Save.clear()
+        FileSave()
+
+    return
+
+
 
 def Main():
 
@@ -198,6 +209,7 @@ def Main():
     ComparisonDict()
     # 保存以防错误
     FileSave()
+    
 
     return NewList
 
@@ -205,9 +217,9 @@ def Main():
 
 
 def setting():
-    print(keyList)
-    print(EssentialList)
-    print(X)
-    print('监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+ str(Start)+'-'+str(End))
+    # print(keyList)
+    # print(EssentialList)
+    # print(X)
+   #  print('监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+ str(Start)+'-'+str(End))
     return '监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+ str(Start)+'-'+str(End)
 
