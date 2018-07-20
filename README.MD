@@ -9,6 +9,7 @@
 - 2018/7/14 完成API部分
 - 2018/7/19 修复API部分，完成关键词监控部分
 - 2018/7/20 关键词监控部分上线，微信监控部分测试...
+- 2018/7/20 修复初始化问题
 
 
 ## TieBa API Util
@@ -18,7 +19,7 @@
 - 可制作第三方客户端
 - 回复以及楼中楼形式
 
-[<font size=4>Tieba API 相关说明</font>](/ApiRedme/README.md)
+[<font size=4>Tieba API 相关说明</font>](/ApiRedme)
 
 ## Sentiment API 
 
@@ -29,7 +30,7 @@
 - 可作为其他项目工具
 
 
-[<font size=4>Sentiment API 相关说明</font>](/Sentiment/README.md)
+[<font size=4>Sentiment API 相关说明</font>](/Sentiment)
 
 ### 相关依赖
 	pip install requests
