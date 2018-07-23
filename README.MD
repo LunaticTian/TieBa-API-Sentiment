@@ -10,6 +10,7 @@
 - 2018/7/19 修复API部分，完成关键词监控部分
 - 2018/7/20 关键词监控部分上线，微信监控部分测试...
 - 2018/7/20 修复初始化问题
+- 2018/7/23 更新Sentiment人性化设置，加入全新微信机器人监控(myitchat.py)
 
 
 ## TieBa API Util
@@ -32,6 +33,18 @@
 
 [<font size=4>Sentiment API 相关说明</font>](/Sentiment)
 
+## myitchat
+
+- 图灵机器人
+- 智能对话
+- 微信监控舆情
+- 智能化控制
+
+[<font size=4>myitchat 相关说明</font>](/myitchat)
+
 ### 相关依赖
+
 	pip install requests
 	pip install BeautifulSoup
+	pip install itchat
+
