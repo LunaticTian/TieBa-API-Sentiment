@@ -370,14 +370,7 @@ def dict_string(dict):
     return '监控到更新的数据  \n \n'+res
 
 
-# if __name__ == "__main__":
-#
-#     print(setting())
-#     while 1 :
-#         c = Main()
-#         print(c)
 
-# 更改配置
 
 def SetSetting(dict):
     global keyList,EssentialList,X,Start,End
