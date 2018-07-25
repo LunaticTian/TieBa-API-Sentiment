@@ -4,11 +4,9 @@ import tieba
 import threading
 import json
 
+KEY = '42afd1a6112f4a93bbaa83022d980132'
 
-# 图灵key
-
-KEY = 'xxxxxxxxx'
-
+T = 0
 
 def get_response(msg, UserId):
     # 这里我们就像在“3. 实现最简单的与图灵机器人的交互”中做的一样
@@ -38,7 +36,7 @@ def get_response(msg, UserId):
         }
     },
     "userInfo": {
-        "apiKey": KEY,
+        "apiKey": "42afd1a6112f4a93bbaa83022d980132",
         "userId": str(UserId)[1:33]
     }
 }
@@ -67,16 +65,37 @@ def print_content(msg):
     # print(msg)
     global id
     print('id = |'+ id)
-    if msg['Text'] == '开启监控'and (id == '' or id ==None ):
+
+    if msg['Text'] == '开启监控' and (id == '' or id ==None ):
 
         # 引用全局变量
         id = msg['FromUserName']
         itchat.send_msg('已经开启监控~', toUserName=id)
         itchat.send_msg(tieba.setting(), toUserName=id)
-
-
-
         return
+
+    if msg['Text'] == '修改配置' and id == msg['FromUserName']:
+        Setting = tieba.GetSetting()
+        a = {
+            '监控贴吧列表':Setting[0],
+            '监控关键词':Setting[1],
+            '监控周期(S)':Setting[2],
+            '开始页数':Setting[3],
+            '结束页数': Setting[4]
+        }
+        itchat.send_msg('修改以下列信息，并且将修改后的信息复制发送', toUserName=id)
+        itchat.send_msg(str(a), toUserName=id)
+        return
+
+    if  '监控贴吧列表' in msg['Text'] :
+        global T
+        T = 1
+        return tieba.SetSetting(eval(msg['Text']))
+
+
+
+
+
     # 这次对接收信息做一次判断
     sentence = msg['Text']
 
@@ -88,14 +107,19 @@ def print_content(msg):
     return get_response(msg['Text'],msg['FromUserName'])
 
 def Main():
-
+    global T
     while 1:
 
         C = tieba.Main()
         print('This is myitchat: '+ str(C) )
         if C == None or C == []:
             continue
-        itchat.send_msg(str(C),toUserName=id)
+        if T == 1:
+            T == 0
+
+        if  T ==0:
+
+            itchat.send_msg(str(C),toUserName=id)
 
 
 
@@ -103,8 +127,8 @@ def Main():
 
 
 
-# itchat.auto_login(enableCmdQR=2)
-itchat.auto_login(hotReload=True)
+itchat.auto_login(enableCmdQR=2)
+# itchat.auto_login(hotReload=True)
 # blockThread=False 启用解除block
 itchat.run(blockThread=False)
 tieba.ini()
