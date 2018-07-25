@@ -111,7 +111,7 @@ def GetText(list):
         Text = TiebaApiUtil.GetTiebaOne(id)
 
         test1 = eval(Text)
-        print(str(test1))
+        # print(str(test1))
 
         for i in test1:
         # 检测回复是否有关键词
@@ -189,8 +189,8 @@ NewSave = {}
 
 '''
 def ComparisonDict():
-    print('This is OldSave: '+ str(OldSave))
-    print('This is Save: '+ str(Save))
+    # print('This is OldSave: '+ str(OldSave))
+    # print('This is Save: '+ str(Save))
 
     for x in Save:
         for i,y in zip(OldSave,range(1,len(OldSave)+1)):
@@ -223,8 +223,8 @@ NewKey = {}
 dict = {}
 
 def ComparisonDictKey():
-    print('This is OldKeyText: ' + str(OldKeyText))
-    print('This is KeyText: ' + str(KeyText))
+    # print('This is OldKeyText: ' + str(OldKeyText))
+    # print('This is KeyText: ' + str(KeyText))
 
 
 
@@ -241,7 +241,7 @@ def ComparisonDictKey():
                     if K['Text'] == O['Text'] and K['Author'] == O['Author'] and K['Time'] == O['Time']:
                         break
                     if C == len(OldKeyText[New]) and (K['Text'] != O['Text'] or K['Author'] != O['Author'] or K['Time'] != O['Time']):
-                        print(K)
+                        # print(K)
                         list.append(K)
                         T = 1
             if T == 1:
@@ -337,6 +337,9 @@ def setting():
     # print(X)
    #  print('监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+ str(Start)+'-'+str(End))
     return '监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+ str(Start)+'-'+str(End)
+
+def GetSetting():
+    return keyList,keyList,X,Start,End
 '''
 帖子地址：https://tieba.baidu.com/p/5806299422
 遥远彼方(12:24):
@@ -367,6 +370,39 @@ def dict_string(dict):
     return '监控到更新的数据  \n \n'+res
 
 
+# if __name__ == "__main__":
+#
+#     print(setting())
+#     while 1 :
+#         c = Main()
+#         print(c)
 
+# 更改配置
+
+def SetSetting(dict):
+    global keyList,EssentialList,X,Start,End
+
+    keyList = dict['监控贴吧列表']
+    EssentialList = dict['监控关键词']
+    X = dict['监控周期(S)']
+    Start = dict['开始页数']
+    End = dict['结束页数']
+
+    # 写入文件
+    config = configparser.ConfigParser()
+    # 编码要设置成utf-8-sig而并不是utf-8
+    config.read('TiebaSetting.conf', encoding='utf-8-sig')
+
+    config.set('Setting','Sleep',X)
+    config.set('Setting', 'Start', Start)
+    config.set('Setting', 'End', End)
+    config.set('Setting', 'tb', ','.join(keyList))
+    config.set('Customize', 'Essential', ','.join(EssentialList))
+
+    with open("TiebaSetting.conf", "w+") as f:
+        config.write(f)
+
+    return '监控贴吧列表: ' + str(keyList) + '\n' + '监控关键词: ' + str(EssentialList) + '\n' + '监控周期: ' + str(
+        X) + '\n' + '开始-终止/页数: ' + str(Start) + '-' + str(End)
 
 
