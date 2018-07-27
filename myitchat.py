@@ -3,6 +3,7 @@ import requests
 import tieba
 import threading
 import json
+import platform
 
 KEY = '42afd1a6112f4a93bbaa83022d980132'
 
@@ -65,7 +66,8 @@ def print_content(msg):
     # print(msg)
     global id
     print('id = |'+ id)
-
+    print(msg['Text'] == '修改配置')
+    print(id == msg['FromUserName'])
     if msg['Text'] == '开启监控' and (id == '' or id ==None ):
 
         # 引用全局变量
@@ -84,13 +86,16 @@ def print_content(msg):
             '结束页数': Setting[4]
         }
         itchat.send_msg('修改以下列信息，并且将修改后的信息复制发送', toUserName=id)
+
         itchat.send_msg(str(a), toUserName=id)
         return
 
-    if  '监控贴吧列表' in msg['Text'] :
+    if  '监控贴吧列表' in msg['Text']:
         global T
         T = 1
-        return tieba.SetSetting(eval(msg['Text']))
+
+        son = tieba.SetSetting(eval(msg['Text']))
+        return son
 
 
 
@@ -112,23 +117,29 @@ def Main():
 
         C = tieba.Main()
         print('This is myitchat: '+ str(C) )
-        if C == None or C == []:
+        print(T)
+        if C == None or C == [] or C == ' ':
             continue
         if T == 1:
-            T == 0
+            T = 0
+            print('改变了T: '+ str(T))
 
         if  T ==0:
-
-            itchat.send_msg(str(C),toUserName=id)
-
+            itchat.send_msg('监控到更新的数据  \n \n'+str(C),toUserName=id)
 
 
 
 
 
+# 识别系统
+sysstr = platform.system()
 
-itchat.auto_login(enableCmdQR=2)
-# itchat.auto_login(hotReload=True)
+if(sysstr =="Windows"):
+    itchat.auto_login(hotReload=True)
+elif sysstr == "Linux":
+    itchat.auto_login(enableCmdQR=2)
+
+
 # blockThread=False 启用解除block
 itchat.run(blockThread=False)
 tieba.ini()
