@@ -93,7 +93,7 @@ CMD/powershell：***python myitchat.py***
 ## 自定义第三方拓展
 
 - 第三方贴吧请以 *TieBa API Util*  拓展
-- 舆情功能拓展以及其他功能拓展 *Sentiment API *
+- 舆情功能拓展以及其他功能拓展 *Sentiment API*
 - 微信机器人拓展 *myitchat*
 
 以上为建议拓展文件衍生。
