@@ -1,6 +1,8 @@
 # Tieba API Sentiment
 
-贴吧API以及关键词提醒，舆情监控。:smiley:
+贴吧API以及关键词提醒，舆情监控,微信陪聊机器人。
+
+:smiley::smiley::smiley::smiley::smiley:
 
 ## Time update
 
@@ -13,9 +15,91 @@
 - 2018/7/23 更新Sentiment人性化设置，加入全新微信机器人监控(myitchat.py)
 - 2018/7/25 更新myitchat以及Sentiment API，添加配置修改内容
 - 2018/7/25 Beta V0.1 上线 
+- 2018/7/27 修复若干问题,正式版V1.0上线
 
 
-## TieBa API Util
+## 相关依赖
+	python 3+
+	pip install requests
+	pip install BeautifulSoup
+	pip install itchat
+
+
+## 使用方法
+
+### Windows：
+
+点击目录下的：
+***TiebaStrat.bat***
+
+![](http://pbnsc9qwg.bkt.clouddn.com/win.jpg)
+
+
+### Windows/Linux：
+
+CMD/powershell：***python myitchat.py***
+
+![](http://pbnsc9qwg.bkt.clouddn.com/linux.jpg)
+
+
+扫码完成后即可开启贴吧微信助手。
+
+
+
+### 微信机器人
+
+![](http://pbnsc9qwg.bkt.clouddn.com/robet.PNG)
+
+
+### 关键词舆情监控
+
+编辑TiebaSetting.conf：
+
+	[Setting]
+	# 休眠周期/秒
+	sleep = 300
+	# 监控贴吧
+	tb = 林俊杰,周杰伦,王力宏
+	# 开始监控页数
+	start = 1
+	# 结束监控页数
+	end = 3
+	
+	[Customize]
+	# 关键词
+	essential = 演唱会,华语乐坛
+
+
+
+
+
+1. 启动微信扫码登陆
+2. 输入“开启监控”,即可记录该用户ID并且在之后的监控数据以及配置修改都只有该用户可执行。
+![](http://pbnsc9qwg.bkt.clouddn.com/wx1.png)
+3. 输入“修改配置”，复制模板修改并且发送即可修改。
+![](http://pbnsc9qwg.bkt.clouddn.com/wx5.png)
+4. 享受结果。
+
+![](http://pbnsc9qwg.bkt.clouddn.com/wx6.PNG)
+
+----------
+## 详细思路
+
+访问我的博客：
+
+[贴吧监控助手](http://lunatic.wang/posts/d1eb00bb/)
+
+----------
+## 自定义第三方拓展
+
+- 第三方贴吧请以 *TieBa API Util*  拓展
+- 舆情功能拓展以及其他功能拓展 *Sentiment API *
+- 微信机器人拓展 *myitchat*
+
+以上为建议拓展文件衍生。
+
+----------
+## TieBa API Util 
 
 - 获取官方贴吧信息
 - 高度自由化的信息收集
@@ -44,9 +128,8 @@
 
 [<font size=4>myitchat 相关说明</font>](/myitchat)
 
-### 相关依赖
 
-	pip install requests
-	pip install BeautifulSoup
-	pip install itchat
 
+## 其他说明
+
+请勿用于商业用途
