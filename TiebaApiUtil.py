@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import copy
+import time
 
 # 自制贴吧api
 """
@@ -59,9 +60,11 @@ def GetPage(key,Start=1,End=3):
     }
     SuperList = []
     for i in range(Start,End,20):
+
         url = url1 + key + url2 + str(i)
 
         # print(url)
+        time.sleep(0.01)
         GetPageID = requests.get(url = url,headers=headers)
         if '欢迎创建本吧，与今后来到这里的朋友交流讨论' in GetPageID.text:
             Error = {
@@ -169,7 +172,8 @@ def GetTiebaOne(ID):
     url = url1+str(ID)+url2+url3
     # print(url)
     # 于前处理
-    GetContent = requests.get(url=url)
+    time.sleep(0.01)
+    GetContent = requests.get(url=url,headers=headers)
     # Soup = BeautifulSoup(GetContent.text,'lxml')
 
     #   获取页数
@@ -197,8 +201,8 @@ def GetTiebaOne(ID):
         url3 = '&lp=6021'
         url = url1 + str(ID) + url2 + url3
         # print(url)
-
-        GetContent = requests.get(url=url)
+        time.sleep(0.01)
+        GetContent = requests.get(url=url,headers=headers)
 
         Soup = BeautifulSoup(GetContent.text, 'lxml')
         findall = Soup.select('div.i')
@@ -219,9 +223,12 @@ def GetTiebaOne(ID):
                 SonDict['FloorInFloor'] = ''
                 FatherList.append(copy.deepcopy(SonDict))
             else:
+
                 pattern = re.compile('class="i">\d*楼.\s(.*?)<table>.*?<span class="g"><a href=".*?">(.*?)</a>.*?class="b">(.*?)</span>.*?href="(.*?)">回复(.*?)</a>', re.S)
                 items = re.findall(pattern, str(OneContent))
 
+                if items == [] or items == None or items == '':
+                    continue
                 Text = items[0][0]
                 Author = items[0][1]
                 Time = items[0][2]
@@ -265,8 +272,8 @@ def GetFloorInFloor(url):
     ReturnList = []
 
     for pn in range(1,100):
-
-        web = requests.get(url=url2+str(pn))
+        time.sleep(0.01)
+        web = requests.get(url=url2+str(pn),headers=headers)
         Soup = BeautifulSoup(web.text,'lxml')
         findall = Soup.select('div.i')
         for i in findall:
@@ -287,10 +294,6 @@ def GetFloorInFloor(url):
             break
     return ReturnList
 
-
-if __name__  == '__main__':
-    S = GetTiebaOne(5462782391)
-    print(S)
 
 
 
