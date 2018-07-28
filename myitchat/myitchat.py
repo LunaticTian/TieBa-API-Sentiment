@@ -113,19 +113,22 @@ def print_content(msg):
 
 def Main():
     global T
+    i = 0
     while 1:
 
         C = tieba.Main()
         print('This is myitchat: '+ str(C) )
         print(T)
-        if C == None or C == [] or C == ' ':
+
+        if C == None or C == [] or C == ' ' or len(C) > 3452:
             continue
         if T == 1:
             T = 0
             print('改变了T: '+ str(T))
 
-        if  T ==0:
+        if  T ==0 and i != 0 :
             itchat.send_msg('监控到更新的数据  \n \n'+str(C),toUserName=id)
+        i += 1
 
 
 
