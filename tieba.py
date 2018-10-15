@@ -5,7 +5,7 @@ import configparser
 import TiebaApiUtil
 import copy
 import re
-
+import datetime
 """
 此处用".conf"进行配置
 Python 读取写入配置文件 —— ConfigParser
@@ -42,7 +42,7 @@ key = config.get("Setting", "tb")
 keyList = key.split(',')
 Essential = config.get("Customize", "Essential")
 EssentialList = Essential.split(',')
-
+Time = config.get("Setting","Time")
 # 休息周期
 X = config.getint("Setting", "Sleep")
 
@@ -50,6 +50,11 @@ X = config.getint("Setting", "Sleep")
 Start = config.getint("Setting", "Start")
 # 结束页数
 End = config.getint("Setting", "End")
+
+
+Year = int(datetime.datetime.now().strftime('%Y-%m-%d').split('-')[0])
+
+refer_to = Time.split('-')
 
 # 信息存取列表
 Save = {}
@@ -83,17 +88,7 @@ def GetId():
 OldKeyText = {}
 KeyText = {}
 
-'''
-{
-123123123 : [
-{
-}
-]
 
-
-}
-
-'''
 
 
 
@@ -125,17 +120,20 @@ def GetText(list):
                         'Time':i['Time']
                     }
 
-                    KeyList.append(key)
+                    # 时间限制
+                    if(TimeLimit(i['Time'])):
+                        print(i['Time'])
+                        KeyList.append(key)
 
-                    # ID 在Save中
+                        # ID 在Save中
 
-                    if str(id) in Save:
-                        # print('旧ID')
-                        Save[str(id)] += 1
-                    # ID 不在Save中
-                    else:
-                        # print('出现新ID')
-                        Save[str(id)] = 1
+                        if str(id) in Save:
+                            # print('旧ID')
+                            Save[str(id)] += 1
+                        # ID 不在Save中
+                        else:
+                            # print('出现新ID')
+                            Save[str(id)] = 1
                 # 检测楼中楼是否存在
                 if  not (i['FloorInFloor']  == '' or i['FloorInFloor']  == None or i['FloorInFloor']  == []):
 
@@ -151,15 +149,16 @@ def GetText(list):
                                 'Text': f['Text'],
                                 'Time': f['Time']
                             }
+                            if (TimeLimit(i['Time'])):
+                                print(i['Time'])
+                                KeyList.append(key)
 
-                            KeyList.append(key)
-
-                            if str(id) in Save:
-                                # print('旧楼中楼ID')
-                                Save[str(id)] += 1
-                            else:
-                                # print('新楼中楼ID')
-                                Save[str(id)] = 1
+                                if str(id) in Save:
+                                    # print('旧楼中楼ID')
+                                    Save[str(id)] += 1
+                                else:
+                                    # print('新楼中楼ID')
+                                    Save[str(id)] = 1
             except TypeError:
                 pass
         if T == 1:
@@ -187,8 +186,8 @@ NewSave = {}
 
 '''
 def ComparisonDict():
-    # print('This is OldSave: '+ str(OldSave))
-    # print('This is Save: '+ str(Save))
+    print('This is OldSave: '+ str(OldSave))
+    print('This is Save: '+ str(Save))
 
     for x in Save:
         for i,y in zip(OldSave,range(1,len(OldSave)+1)):
@@ -207,7 +206,7 @@ def ComparisonDict():
             if y == len(OldSave) and  x != i:
                 # print('test2222')
                 NewList.append(str(x))
-
+    print("This NewList :" +str(NewList))
     OldSave.clear()
     OldSave.update(copy.deepcopy(Save))
     Save.clear()
@@ -320,9 +319,9 @@ def Main():
     # 保存以防错误
     FileSave()
     print('This is NewList : ' + str(NewList))
-    print(dict)
+    # print(dict)
     c = dict_string(dict)
-
+    # print("This is c "+ c)
 
 
     return c
@@ -335,7 +334,7 @@ def setting():
     # print(EssentialList)
     # print(X)
    #  print('监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+ str(Start)+'-'+str(End))
-    return '监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+ str(Start)+'-'+str(End)
+    return '监控贴吧列表: '+ str(keyList) + '\n' + '监控关键词: '+ str(EssentialList) + '\n'+ '监控周期: ' + str(X) + '\n'+'开始-终止/页数: '+str(Start)+'-'+str(End)+ '\n'+ '监控时间：'+str(Time)
 
 def GetSetting():
     return keyList,EssentialList,X,Start,End
@@ -363,10 +362,10 @@ def dict_string(dict):
             d = c.sub(' ', str(d))
             d = f.sub(' ', str(d))
 
-            str1 = str1 + i['Author'] + '('+i['Time']+')'+':'+d + '\n\n'
+            str1 = str1 + i['Author'] + '('+i['Time']+')'+':'+d + '\n'
 
         res = res + '帖子地址: '+IDurl + '\n' + str1 + '\n'
-        print(res)
+        # print(res)
     return res
 
 
@@ -399,5 +398,48 @@ def SetSetting(dict):
 
     return '监控贴吧列表: ' + str(keyList) + '\n' + '监控关键词: ' + str(EssentialList) + '\n' + '监控周期: ' + str(
         X) + '\n' + '开始-终止/页数: ' + str(Start) + '-' + str(End)
+
+
+# 后前...0/1
+# eg 2018-7-3-1
+# Year Month Day
+# 默认 0000-00-00
+
+def TimeLimit(time):
+    c = time.split('-')
+    refer_to[0] = int(refer_to[0])
+    refer_to[1] = int(refer_to[1])
+    refer_to[2] = int(refer_to[2])
+
+    if(int(refer_to[-1])==0): # 比较前后
+
+        if(len(c)==2):
+            yue = int(c[0])
+            ri = int(c[1].split(' ')[0])
+
+            if(Year>=refer_to[0] and yue>=refer_to[1] and ri >=refer_to[2]):
+                return True
+            return False
+        if(len(c)==3):
+            if(int(c[0])>refer_to[0]):
+                return True
+            if(int(c[0])>=refer_to[0] and int(c[1])>=refer_to[1] and int(c[2])>=refer_to[2]):
+                return True
+            return False
+    else:
+        if (len(c) == 2):
+            yue = int(c[0])
+            ri = int(c[1].split(' ')[0])
+            if (Year <= refer_to[0] and yue <= refer_to[1] and ri <= refer_to[2]):
+                return True
+            return False
+        if (len(c) == 3):
+            if (int(c[0]) < refer_to[0]):
+                return True
+            if (int(c[0]) <= refer_to[0] and int(c[1]) <= refer_to[1] and int(c[2]) <= refer_to[2]):
+                return True
+            return False
+
+
 
 
