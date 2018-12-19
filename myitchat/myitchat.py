@@ -5,7 +5,7 @@ import threading
 import json
 import platform
 
-KEY = '42afd1a6112f4a93bbaa83022d980132'
+KEY = 'xxxxxxx'
 
 T = 0
 
@@ -13,11 +13,7 @@ def get_response(msg, UserId):
     # 这里我们就像在“3. 实现最简单的与图灵机器人的交互”中做的一样
     # 构造了要发送给服务器的数据
     apiUrl = 'http://openapi.tuling123.com/openapi/api/v2'
-    # data = {
-    #     'key'    : KEY,
-    #     'info'   : msg,
-    #     'userid' : 'wechat-robot',
-    # }
+
 
     data = {
     "reqType": 0,
@@ -113,7 +109,7 @@ def print_content(msg):
 
 def Main():
     global T
-    i = 0
+    i = 1
     while 1:
 
         C = tieba.Main()
@@ -146,7 +142,7 @@ elif sysstr == "Linux":
 # blockThread=False 启用解除block
 itchat.run(blockThread=False)
 tieba.ini()
-tie = threading.Thread(target=Main(), )
+tie = threading.Thread(target=Main())
 tie.start()
 
 
