@@ -5,7 +5,7 @@ import threading
 import json
 import platform
 
-KEY = '42afd1a6112f4a93bbaa83022d980132'
+KEY = 'xxxxxxx'
 
 T = 0
 
