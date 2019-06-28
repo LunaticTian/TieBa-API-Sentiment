@@ -4,6 +4,8 @@
 
 :smiley::smiley::smiley::smiley::smiley:
 
+## 2019/6/29日web版贴吧现已失效
+
 ## Time update
 
 - 2018/7/3 立项
