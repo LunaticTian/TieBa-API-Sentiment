@@ -72,7 +72,7 @@
 
 #### 返回形式：
 
-![](http://pbnsc9qwg.bkt.clouddn.com/tieba6)
+![](cdn.lunatic.wang/tieba6)
 
 
 
@@ -201,7 +201,7 @@ tieba.setting()
 
 String 字符串形式：
 
-![](http://pbnsc9qwg.bkt.clouddn.com/tieba7.jpg)
+![](cdn.lunatic.wang/tieba7.jpg)
 
 ---
 
@@ -220,7 +220,7 @@ tieba.GetSetting()
 
 #### 返回形式：
 
-![](http://pbnsc9qwg.bkt.clouddn.com/tieba8.jpg)
+![](cdn.lunatic.wang/tieba8.jpg)
 
 ---
 ### SetSetting(dict) 
@@ -239,7 +239,7 @@ dict : 传入修改的配置文件信息
 #### 返回形式：
 
 
-![](http://pbnsc9qwg.bkt.clouddn.com/tieba7.jpg)
+![](cdn.lunatic.wang/tieba7.jpg)
 
 ---
 ### dict_string(dict) 
