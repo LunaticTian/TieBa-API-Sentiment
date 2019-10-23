@@ -41,7 +41,7 @@
 点击目录下的：
 ***TiebaStrat.bat***
 
-![](http://cdn.lunatic.wangm/win.jpg)
+![](http://img.lunatic.wang/win.jpg)
 
 
 ### Windows/Linux：
