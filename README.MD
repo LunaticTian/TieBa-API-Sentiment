@@ -41,14 +41,14 @@
 点击目录下的：
 ***TiebaStrat.bat***
 
-![](http://pbnsc9qwg.bkt.clouddn.com/win.jpg)
+![](http://cdn.lunatic.wangm/win.jpg)
 
 
 ### Windows/Linux：
 
 CMD/powershell：***python myitchat.py***
 
-![](http://pbnsc9qwg.bkt.clouddn.com/linux.jpg)
+![](http://cdn.lunatic.wang/linux.jpg)
 
 
 扫码完成后即可开启贴吧微信助手。
@@ -57,7 +57,7 @@ CMD/powershell：***python myitchat.py***
 
 ### 微信机器人
 
-![](http://pbnsc9qwg.bkt.clouddn.com/robet.PNG)
+![](http://cdn.lunatic.wang/robet.PNG)
 
 
 ### 关键词舆情监控
@@ -87,12 +87,12 @@ CMD/powershell：***python myitchat.py***
 
 1. 启动微信扫码登陆
 2. 输入“开启监控”,即可记录该用户ID并且在之后的监控数据以及配置修改都只有该用户可执行。
-![](http://pbnsc9qwg.bkt.clouddn.com/wx1.png)
+![](http://cdn.lunatic.wang/wx1.png)
 3. 输入“修改配置”，复制模板修改并且发送即可修改。
-![](http://pbnsc9qwg.bkt.clouddn.com/wx5.png)
+![](http://cdn.lunatic.wang/wx5.png)
 4. 享受结果。
 
-![](http://pbnsc9qwg.bkt.clouddn.com/wx6.PNG)
+![](http://cdn.lunatic.wang/wx6.PNG)
 
 ----------
 ## 详细思路
